@@ -11,6 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.grodno.zagart.java.Util.HibernateUtil.closeFactory;
 import static by.grodno.zagart.java.Util.HibernateUtil.getSession;
 
 public abstract class AbstractHibernateDao<T, PK extends Serializable> implements GenericDao<T, PK> {

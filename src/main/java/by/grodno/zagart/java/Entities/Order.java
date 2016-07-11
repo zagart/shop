@@ -13,7 +13,7 @@ public class Order {
     private Long id;
     private String number;
     private Date dateOfOrder;
-    private List<Product> products = new ArrayList<Product>();
+    private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,19 +27,8 @@ public class Order {
     public Date getDateOfOrder() { return dateOfOrder; }
     public void setDateOfOrder(Date dateOfOrder) { this.dateOfOrder = dateOfOrder; }
 
-    @ElementCollection
-    @ManyToMany(targetEntity = Product.class, mappedBy = "orders")
-    @JoinTable(name = "order_product",
-               joinColumns = @JoinColumn(name = "order_id"),
-               inverseJoinColumns = @JoinColumn(name = "product_id"))
-    public List<Product> getProducts() { return products; }
-    public void setProducts(List<Product> products) { this.products = products; }
-
-    public void addProduct(Product product) {
-        products.add(product);
-        Map<Order, Long> orders = product.getOrders();
-        orders.put(this, product.getQuantity());
-        product.setOrders(orders);
-    }
+    @OneToMany(mappedBy = "order")
+    public List<OrderProduct> getOrderProduct() { return orderProduct; }
+    public void setOrderProduct(List<OrderProduct> orderProduct) { this.orderProduct = orderProduct; }
 
 }
