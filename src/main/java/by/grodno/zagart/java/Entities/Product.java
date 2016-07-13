@@ -1,5 +1,8 @@
 package by.grodno.zagart.java.Entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +36,29 @@ public class Product {
     public Long getCost() { return cost; }
     public void setCost(Long cost) { this.cost = cost; }
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<OrderProduct> getOrderProduct() { return orderProduct; }
     public void setOrderProduct(List<OrderProduct> orderProduct) { this.orderProduct = orderProduct; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return new EqualsBuilder()
+                .append(getId(), product.getId())
+                .append(getName(), product.getName())
+                .append(getDescription(), product.getDescription())
+                .append(getCost(), product.getCost())
+                .append(getOrderProduct(), product.getOrderProduct())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .toHashCode();
+    }
 
 }

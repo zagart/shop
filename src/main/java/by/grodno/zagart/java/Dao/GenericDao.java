@@ -1,6 +1,6 @@
 package by.grodno.zagart.java.Dao;
 
-import org.hibernate.criterion.Criterion;
+import org.hibernate.Criteria;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,13 +13,7 @@ public interface GenericDao<T, PK extends Serializable> {
 
     List<T> getAll();
 
-    Long getLength();
-
-    Long getLength(Criterion criterion);
-
-    List<T> getByCriteria(Criterion criterion, int begin, int count);
-
-    List<T> getByCriteria(Criterion criterion);
+    List<T> getByCriteria(Criteria criteria);
 
     T getById(final PK id);
 

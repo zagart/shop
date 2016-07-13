@@ -1,7 +1,6 @@
 package by.grodno.zagart.java.Util;
 
 import by.grodno.zagart.java.Entities.*;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -13,20 +12,9 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
 
-    private static Session session = init();
+    private static final SessionFactory factory;
 
-    private HibernateUtil() {}
-
-    public static Session getSession() {
-        if (session.isOpen()) {
-            return session;
-        } else {
-            session = init();
-            return session;
-        }
-    }
-
-    private static Session init() {
+    static {
         ServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
@@ -35,9 +23,15 @@ public class HibernateUtil {
                 .addAnnotatedClass(Order.class)
                 .addAnnotatedClass(OrderProduct.class)
                 .buildMetadata();
-        return metadata.buildSessionFactory().openSession();
+        factory = metadata.buildSessionFactory();
     }
 
-    public static void closeFactory() { session.getSessionFactory().close(); }
+    private HibernateUtil() {}
+
+    public static SessionFactory getSessionFactory() {
+        return factory;
+    }
+
+    public static void closeFactory() { factory.close(); }
 
 }

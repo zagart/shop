@@ -1,5 +1,8 @@
 package by.grodno.zagart.java.Entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -42,6 +45,26 @@ public class OrderProduct {
         orderProduct = product.getOrderProduct();
         orderProduct.add(this);
         product.setOrderProduct(orderProduct);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProduct that = (OrderProduct) o;
+        return new EqualsBuilder()
+                .append(getId(), that.getId())
+                .append(getOrder(), that.getOrder())
+                .append(getProduct(), that.getProduct())
+                .append(getQuantity(), that.getQuantity())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .toHashCode();
     }
 
 }
