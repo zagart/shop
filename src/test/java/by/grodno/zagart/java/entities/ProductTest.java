@@ -3,6 +3,7 @@ package by.grodno.zagart.java.entities;
 import by.grodno.zagart.java.Entities.OrderProduct;
 import by.grodno.zagart.java.Entities.Product;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,8 @@ import java.util.Random;
  */
 
 public class ProductTest {
+
+    final private static Logger LOGGER = Logger.getLogger(Logger.class);
 
     private static Random rnd = new Random();
     private Product product = new Product();
@@ -32,6 +35,7 @@ public class ProductTest {
         product.setDescription(description);
         product.setCost(cost);
         product.setOrderProduct(orderProducts);
+        LOGGER.info("Product test initialized.");
     }
 
     @Test
