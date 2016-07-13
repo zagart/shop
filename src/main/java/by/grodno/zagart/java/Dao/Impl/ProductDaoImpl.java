@@ -1,64 +1,67 @@
 package by.grodno.zagart.java.Dao.Impl;
 
-import by.grodno.zagart.java.Dao.AbstractHibernateDao;
+import by.grodno.zagart.java.Dao.GenericDao;
 import by.grodno.zagart.java.Entities.Product;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 
 import java.util.List;
 
+import static by.grodno.zagart.java.Util.HibernateUtil.getSessionFactory;
+
 /**
  * Created by Zagart on 11.07.2016.
  */
-public class ProductDaoImpl extends AbstractHibernateDao<Product, Long> {
+public class ProductDaoImpl implements GenericDao<Product, Long> {
 
-    @Override
     public Long save(Product obj) {
-        return super.save(obj);
+        Session session = getSessionFactory().openSession();
+        session.save(obj);
+        return obj.getId();
     }
 
-    @Override
-    public void update(Product o) {
-        super.update(o);
+    public void update(Product obj) {
+        Session session = getSessionFactory().openSession();
+        session.update(obj);
     }
 
-    @Override
     public List<Product> getAll() {
-        return super.getAll();
+        Session session = getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Product.class);
+        List<Product> list = criteria.list();
+        session.close();
+        return list;
     }
 
-    @Override
-    public Long getLength() {
-        return super.getLength();
+    public List<Product> getByCriteria(Criteria criteria) {
+        Session session = getSessionFactory().openSession();
+        List<Product> list = criteria.list();
+        session.close();
+        return list;
     }
 
-    @Override
-    public List<Product> getByCriteria(Criterion criterion) {
-        return super.getByCriteria(criterion);
-    }
-
-    @Override
-    public Long getLength(Criterion criterion) {
-        return super.getLength(criterion);
-    }
-
-    @Override
-    public List<Product> getByCriteria(Criterion criterion, int begin, int count) {
-        return super.getByCriteria(criterion, begin, count);
-    }
-
-    @Override
     public Product getById(Long id) {
-        return super.getById(id);
+        Session session = getSessionFactory().openSession();
+        Product product = session.load(Product.class, id);
+        return product;
     }
 
-    @Override
     public void delete(Long id) {
-        super.delete(id);
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Product product = session.load(Product.class, id);
+        session.delete(product);
+        transaction.commit();
+        session.close();
     }
 
-    @Override
     public void delete(Product persistentObject) {
-        super.delete(persistentObject);
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(persistentObject);
+        transaction.commit();
+        session.close();
     }
-
 }
