@@ -1,7 +1,7 @@
-package by.grodno.zagart.java.Dao.Impl;
+package by.grodno.zagart.java.dao.impl;
 
-import by.grodno.zagart.java.Dao.GenericDao;
-import by.grodno.zagart.java.Entities.Product;
+import by.grodno.zagart.java.dao.GenericDao;
+import by.grodno.zagart.java.entities.Product;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-import static by.grodno.zagart.java.Util.HibernateUtil.getSessionFactory;
+import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
 
 /**
  * Created by Zagart on 11.07.2016.

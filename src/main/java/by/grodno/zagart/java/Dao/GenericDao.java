@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.Dao;
+package by.grodno.zagart.java.dao;
 
 import org.hibernate.Criteria;
 

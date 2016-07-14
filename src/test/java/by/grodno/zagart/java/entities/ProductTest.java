@@ -1,24 +1,20 @@
 package by.grodno.zagart.java.entities;
 
-import by.grodno.zagart.java.Entities.OrderProduct;
-import by.grodno.zagart.java.Entities.Product;
+import by.grodno.zagart.java.util.Loggable;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
+
 /**
- * Created by intelisoft on 13.07.2016.
+ * Test for product class.
  */
-
-public class ProductTest {
-
-    final private static Logger LOGGER = Logger.getLogger(Logger.class);
+public class ProductTest implements Loggable {
 
     private static Random rnd = new Random();
     private Product product = new Product();
@@ -61,14 +57,6 @@ public class ProductTest {
     @Test
     public void getOrderProductTest() {
         Assert.assertEquals(orderProducts, product.getOrderProduct());
-    }
-
-    private static List<OrderProduct> randomOrderProductList(Long size) {
-        List<OrderProduct> list = new ArrayList<OrderProduct>();
-        for (int i = 0; i < size; i++) {
-            list.add(new OrderProduct());
-        }
-        return list;
     }
 
 }

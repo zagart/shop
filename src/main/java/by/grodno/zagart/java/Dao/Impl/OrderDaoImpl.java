@@ -1,15 +1,14 @@
-package by.grodno.zagart.java.Dao.Impl;
+package by.grodno.zagart.java.dao.impl;
 
-import by.grodno.zagart.java.Dao.GenericDao;
-import by.grodno.zagart.java.Entities.Order;
+import by.grodno.zagart.java.dao.GenericDao;
+import by.grodno.zagart.java.entities.Order;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
 
 import java.util.List;
 
-import static by.grodno.zagart.java.Util.HibernateUtil.getSessionFactory;
+import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
 
 /**
  * Created by Zagart on 11.07.2016.

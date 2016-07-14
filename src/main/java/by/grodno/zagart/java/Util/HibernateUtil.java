@@ -1,6 +1,6 @@
-package by.grodno.zagart.java.Util;
+package by.grodno.zagart.java.util;
 
-import by.grodno.zagart.java.Entities.*;
+import by.grodno.zagart.java.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;

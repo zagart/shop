@@ -1,8 +1,8 @@
-package by.grodno.zagart.java.Util;
+package by.grodno.zagart.java.util;
 
-import by.grodno.zagart.java.Entities.Order;
-import by.grodno.zagart.java.Entities.OrderProduct;
-import by.grodno.zagart.java.Entities.Product;
+import by.grodno.zagart.java.entities.Order;
+import by.grodno.zagart.java.entities.OrderProduct;
+import by.grodno.zagart.java.entities.Product;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 
@@ -40,6 +40,14 @@ public class CommonUtil {
             session.save(order);
             session.save(orderProduct);
         }
+    }
+
+    public static List<OrderProduct> randomOrderProductList(Long size) {
+        List<OrderProduct> list = new ArrayList<OrderProduct>();
+        for (int i = 0; i < size; i++) {
+            list.add(new OrderProduct());
+        }
+        return list;
     }
 
 }

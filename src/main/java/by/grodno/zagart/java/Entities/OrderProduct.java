@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.Entities;
+package by.grodno.zagart.java.entities;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
