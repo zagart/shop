@@ -16,13 +16,13 @@ import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
  */
 public class ProductTest implements Loggable {
 
-    private static Random rnd = new Random();
+    private Random rnd = new Random();
     private Product product = new Product();
-    private static Long id = rnd.nextLong();
-    private static String name = RandomStringUtils.randomAlphabetic(100);
-    private static String description = RandomStringUtils.randomAlphabetic(100);
-    private static Long cost = rnd.nextLong();
-    private static List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
+    private Long id = rnd.nextLong();
+    private String name = RandomStringUtils.randomAlphabetic(100);
+    private String description = RandomStringUtils.randomAlphabetic(100);
+    private Long cost = rnd.nextLong();
+    private List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
 
     @Before
     public void init() {
@@ -31,7 +31,7 @@ public class ProductTest implements Loggable {
         product.setDescription(description);
         product.setCost(cost);
         product.setOrderProduct(orderProducts);
-        LOGGER.info("Product test initialized.");
+        logger.info("Product test initialized.");
     }
 
     @Test

@@ -9,4 +9,7 @@
         <priority value="warning"/>
         <appender-ref ref="console"/>
     </root>
+    <logger name="org.hibernate">
+        <level value="error" />
+    </logger>
 </log4j:configuration>

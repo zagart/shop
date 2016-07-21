@@ -17,12 +17,12 @@ import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
  */
 public class OrderTest implements Loggable {
 
-    private static Random rnd = new Random();
-    private static Order order = new Order();
-    private static Long id = rnd.nextLong();
-    private static String number = RandomStringUtils.randomNumeric(20);
-    private static Date dateOfOrder = new Date();
-    private static List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
+    private Random rnd = new Random();
+    private Order order = new Order();
+    private Long id = rnd.nextLong();
+    private String number = RandomStringUtils.randomNumeric(20);
+    private Date dateOfOrder = new Date();
+    private List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
 
     @Before
     public void init() {
@@ -30,7 +30,7 @@ public class OrderTest implements Loggable {
         order.setNumber(number);
         order.setDateOfOrder(dateOfOrder);
         order.setOrderProduct(orderProducts);
-        LOGGER.info("Order test initialized.");
+        logger.info("Order test initialized.");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class OrderProductTest implements Loggable {
         orderProduct.setOrder(order);
         orderProduct.setProduct(product);
         orderProduct.setQuantity(quantity);
-        LOGGER.info("OrderProduct test initialized.");
+        logger.info("OrderProduct test initialized.");
     }
 
     @Test

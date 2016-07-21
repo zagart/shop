@@ -7,6 +7,6 @@ import org.apache.log4j.Logger;
  */
 public interface Loggable {
 
-    Logger LOGGER = Logger.getLogger(Logger.class);
+    Logger logger = Logger.getLogger(Logger.class);
 
 }
