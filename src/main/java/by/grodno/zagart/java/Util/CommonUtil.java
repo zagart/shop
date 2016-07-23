@@ -3,6 +3,9 @@ package by.grodno.zagart.java.util;
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.entities.OrderProduct;
 import by.grodno.zagart.java.entities.Product;
+import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
+import by.grodno.zagart.java.services.impl.OrderServiceImpl;
+import by.grodno.zagart.java.services.impl.ProductServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Session;
@@ -18,31 +21,34 @@ import java.util.Random;
  */
 public class CommonUtil {
 
-    public static void createOrders(int quantity, Session session) {
+    private static OrderServiceImpl orderService = new OrderServiceImpl();
+    private static OrderProductServiceImpl orderProductService = new OrderProductServiceImpl();
+    private static ProductServiceImpl productService = new ProductServiceImpl();
+
+    public static void createOrders(int quantity) {
         for (int i = 0; i < quantity; i++) {
             Random rnd = new Random();
             Product product = new Product();
             product.setDescription(RandomStringUtils.randomAlphabetic(20));
             product.setName(RandomStringUtils.randomAlphabetic(10));
             product.setCost((long)rnd.nextInt(100));
-            Transaction transaction = session.beginTransaction();
-            session.save(product);
+            productService.save(product);
             Order order = new Order();
             order.setNumber(RandomStringUtils.randomNumeric(6));
             order.setDateOfOrder(randomDate());
             OrderProduct orderProduct = new OrderProduct();
-            orderProduct.addOrderProduct(order,product,(long)rnd.nextInt(100));
-            session.save(orderProduct);
+            orderProduct.addOrderProduct(order, product, (long)rnd.nextInt(100));
+            orderService.save(order);
+            orderProductService.save(orderProduct);
             product = new Product();
             product.setDescription(RandomStringUtils.randomAlphabetic(20));
             product.setName(RandomStringUtils.randomAlphabetic(10));
             product.setCost(317L);
-            session.save(product);
+            productService.save(product);
             orderProduct = new OrderProduct();
-            orderProduct.addOrderProduct(order,product,(long)rnd.nextInt(10));
-            session.save(order);
-            session.save(orderProduct);
-            transaction.commit();
+            orderProduct.addOrderProduct(order, product,(long)rnd.nextInt(10));
+            orderService.update(order);
+            orderProductService.save(orderProduct);
         }
     }
 

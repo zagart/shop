@@ -12,13 +12,18 @@ import java.util.List;
  */
 @Entity
 @Table(name = "shop_product")
-public class Product {
+public class Product implements IdentifiableEntity<Long> {
+
+    private static String entityName = "Product";
 
     private Long id;
     private String name;
     private String description;
     private Long cost;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
+
+    public static void setEntityName(String entityName) { Product.entityName = entityName; }
+    public String getEntityName() { return entityName; }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

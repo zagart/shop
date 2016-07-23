@@ -1,11 +1,14 @@
 package by.grodno.zagart.java.services;
 
+import by.grodno.zagart.java.dao.impl.OrderDaoImpl;
 import by.grodno.zagart.java.dao.impl.OrderProductDaoImpl;
+import by.grodno.zagart.java.dao.impl.ProductDaoImpl;
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.entities.OrderProduct;
 import by.grodno.zagart.java.entities.Product;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -14,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
+import static org.apache.commons.lang3.time.DateUtils.*;
 
 /**
  * Created by Zagart on 14.07.2016.
@@ -45,7 +49,8 @@ public class MainService {
     }
 
     public static void getOrderByProduct(Product product) {
-        for (OrderProduct op : product.getOrderProduct()) {
+        Product localProduct = product;
+        for (OrderProduct op : localProduct.getOrderProduct()) {
             System.out.println(op.getOrder().getNumber());
         }
     }
@@ -70,6 +75,32 @@ public class MainService {
         for (OrderProduct op : list) {
             System.out.println(op.getProduct().getId());
         }
+
+        getSessionFactory().getCurrentSession().close();
+    }
+
+    public static void createNewOrderByDay(Date date) {
+        OrderDaoImpl orderDao = new OrderDaoImpl();
+        OrderProductDaoImpl orderProductDao = new OrderProductDaoImpl();
+        Date dayStart = setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0);
+        Date dayEnd = setHours(setMinutes(setSeconds(setMilliseconds(date, 999), 59), 59), 23);
+        Session session = getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Order.class, "dateOfOrder")
+                .add(Restrictions.between("dateOfOrder", dayStart, dayEnd));
+        getSessionFactory().getCurrentSession().close();
+        List<Order> list = orderDao.getByCriteria(criteria);
+
+        Order newOrder = new Order();
+        OrderProduct orderProduct = new OrderProduct();
+        ProductDaoImpl productDao = new ProductDaoImpl();
+        for (Order o : list) {
+            for (OrderProduct op : o.getOrderProduct()) {
+                orderProduct.addOrderProduct(newOrder, op.getProduct(), 1L);
+                productDao.update(op.getProduct());
+            }
+        }
+        orderDao.save(newOrder);
+        orderProductDao.save(orderProduct);
     }
 
 }

@@ -1,7 +1,9 @@
 package by.grodno.zagart.java.util;
 
 import by.grodno.zagart.java.entities.*;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,6 +15,10 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
 
     private static final SessionFactory factory;
+    private static Session currentSession;
+    private static Transaction currentTransaction;
+
+    private HibernateUtil() {}
 
     static {
         ServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
@@ -26,7 +32,33 @@ public class HibernateUtil {
         factory = metadata.buildSessionFactory();
     }
 
-    private HibernateUtil() {}
+    public static Session getCurrentSession() {
+        return currentSession;
+    }
+
+    public static Transaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
+    public static Session openCurrentSession() {
+        currentSession = factory.openSession();
+        return currentSession;
+    }
+
+    public static Transaction openCurrentSessionWithTransaction() {
+        currentSession = factory.openSession();
+        currentTransaction = currentSession.beginTransaction();
+        return currentTransaction;
+    }
+
+    public static void closeCurrentSession() {
+        currentSession.close();
+    }
+
+    public static void closeCurrentSessionWithTransaction() {
+        currentTransaction.commit();
+        currentSession.close();
+    }
 
     public static SessionFactory getSessionFactory() {
         return factory;

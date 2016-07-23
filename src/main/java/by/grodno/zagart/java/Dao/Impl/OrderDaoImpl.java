@@ -3,12 +3,10 @@ package by.grodno.zagart.java.dao.impl;
 import by.grodno.zagart.java.dao.GenericDao;
 import by.grodno.zagart.java.entities.Order;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.util.List;
 
-import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
+import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
 
 /**
  * Created by Zagart on 11.07.2016.
@@ -16,52 +14,34 @@ import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
 public class OrderDaoImpl implements GenericDao<Order, Long> {
 
     public Long save(Order obj) {
-        Session session = getSessionFactory().openSession();
-        session.save(obj);
+        getCurrentSession().save(obj);
         return obj.getId();
     }
 
     public void update(Order obj) {
-        Session session = getSessionFactory().openSession();
-        session.update(obj);
+        getCurrentSession().update(obj);
     }
 
     public List<Order> getAll() {
-        Session session = getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Order.class);
-        List<Order> list = criteria.list();
-        session.close();
-        return list;
+        Criteria allRecords = getCurrentSession().createCriteria(Order.class);
+        return allRecords.list();
     }
 
     public List<Order> getByCriteria(Criteria criteria) {
-        Session session = getSessionFactory().openSession();
-        List<Order> list = criteria.list();
-        session.close();
-        return list;
+        return criteria.list();
     }
 
     public Order getById(Long id) {
-        Session session = getSessionFactory().openSession();
-        Order order = session.load(Order.class, id);
-        return order;
+        return getCurrentSession().load(Order.class, id);
     }
 
     public void delete(Long id) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        Order order = session.load(Order.class,id);
-        session.delete(order);
-        transaction.commit();
-        session.close();
+        Order order = getCurrentSession().load(Order.class, id);
+        getCurrentSession().delete(order);
     }
 
     public void delete(Order persistentObject) {
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(persistentObject);
-        transaction.commit();
-        session.close();
+        getCurrentSession().delete(persistentObject);
     }
 
 }

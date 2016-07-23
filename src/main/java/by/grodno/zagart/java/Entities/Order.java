@@ -11,12 +11,17 @@ import java.util.*;
  */
 @Entity
 @Table(name = "shop_order")
-public class Order {
+public class Order implements IdentifiableEntity<Long> {
+
+    private static String entityName = "Order";
 
     private Long id;
     private String number;
     private Date dateOfOrder;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
+
+    public String getEntityName() { return entityName; }
+    public static void setEntityName(String entityName) { Order.entityName = entityName; }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
