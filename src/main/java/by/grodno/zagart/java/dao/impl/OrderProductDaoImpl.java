@@ -1,9 +1,9 @@
 package by.grodno.zagart.java.dao.impl;
 
 import by.grodno.zagart.java.dao.AbstractHibernateDao;
-import by.grodno.zagart.java.entities.Product1;
+import by.grodno.zagart.java.entities.OrderProduct;
 
 /**
  * Created by Zagart on 11.07.2016.
  */
-public class ProductDaoImpl1 extends AbstractHibernateDao<Product1, Long> {   }
+public class OrderProductDaoImpl extends AbstractHibernateDao<OrderProduct, Long> {  }

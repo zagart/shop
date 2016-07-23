@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import static by.grodno.zagart.java.util.CommonUtil1.randomOrderProductList;
+import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
 
 /**
  * Test for order class.
@@ -18,11 +18,11 @@ import static by.grodno.zagart.java.util.CommonUtil1.randomOrderProductList;
 public class OrderTest implements Loggable {
 
     private Random rnd = new Random();
-    private Order1 order = new Order1();
+    private Order order = new Order();
     private Long id = rnd.nextLong();
     private String number = RandomStringUtils.randomNumeric(20);
     private Date dateOfOrder = new Date();
-    private List<OrderProduct1> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
+    private List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
 
     @Before
     public void init() {
@@ -30,7 +30,7 @@ public class OrderTest implements Loggable {
         order.setNumber(number);
         order.setDateOfOrder(dateOfOrder);
         order.setOrderProduct(orderProducts);
-        logger.info("Order1 test initialized.");
+        logger.info("Order test initialized.");
     }
 
     @Test

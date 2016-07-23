@@ -5,7 +5,7 @@ import org.hibernate.Criteria;
 import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDao1<T, PK extends Serializable> {
+public interface GenericDao<T, PK extends Serializable> {
 
     PK save(final T obj);
 

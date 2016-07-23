@@ -1,8 +1,8 @@
 package by.grodno.zagart.java.services;
 
-import by.grodno.zagart.java.dao.GenericDao1;
+import by.grodno.zagart.java.dao.GenericDao;
+import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.interfaces.IdentifiableEntity;
-import by.grodno.zagart.java.entities.Order1;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.ReflectiveGeneric;
 import org.hibernate.Criteria;
@@ -11,7 +11,7 @@ import org.hibernate.criterion.Criterion;
 import java.io.Serializable;
 import java.util.List;
 
-import static by.grodno.zagart.java.util.HibernateUtil1.*;
+import static by.grodno.zagart.java.util.HibernateUtil.*;
 
 /**
  * Created by Zagart on 22.07.2016.
@@ -19,10 +19,10 @@ import static by.grodno.zagart.java.util.HibernateUtil1.*;
 public abstract class AbstractHibernateService
                     <T extends IdentifiableEntity,
                     PK extends Serializable,
-                    DAO extends GenericDao1>
+                    DAO extends GenericDao>
                     implements GenericService<T, PK>, Loggable, ReflectiveGeneric {
 
-    private GenericDao1 dao = (GenericDao1) getGenericObject(2, logger);
+    private GenericDao dao = (GenericDao) getGenericObject(2, logger);
     private final T entityObj;
 
     { entityObj = (T) getGenericObject(0, logger); }
@@ -63,7 +63,7 @@ public abstract class AbstractHibernateService
     public List<T> getByCriterion(Criterion criterion) {
         openCurrentSession();
         Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass()).add(criterion);
-        List<Order1> daoByCriteria = dao.getByCriteria(criteria);
+        List<Order> daoByCriteria = dao.getByCriteria(criteria);
         closeCurrentSession();
         logger.info(String.format("%s objects pulled from database by criterion(%d).",
                 entityObj.getEntityName(),
@@ -76,7 +76,7 @@ public abstract class AbstractHibernateService
         openCurrentSession();
         Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass());
         criterions.forEach(criteria::add);
-        List<Order1> daoByCriteria = dao.getByCriteria(criteria);
+        List<Order> daoByCriteria = dao.getByCriteria(criteria);
         closeCurrentSession();
         logger.info(String.format("%s objects pulled from database by criterions(%d).",
                 entityObj.getEntityName(),
