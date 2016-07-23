@@ -13,10 +13,10 @@ import java.util.Random;
 public class OrderProductTest implements Loggable {
 
     private Random rnd = new Random();
-    private OrderProduct orderProduct = new OrderProduct();
+    private OrderProduct1 orderProduct = new OrderProduct1();
     private Long id = rnd.nextLong();
-    private Order order = new Order();
-    private Product product = new Product();
+    private Order1 order = new Order1();
+    private Product1 product = new Product1();
     private Long quantity = (long) Math.abs(rnd.nextInt(1000));
 
     @Before
@@ -25,7 +25,7 @@ public class OrderProductTest implements Loggable {
         orderProduct.setOrder(order);
         orderProduct.setProduct(product);
         orderProduct.setQuantity(quantity);
-        logger.info("OrderProduct test initialized.");
+        logger.info("OrderProduct1 test initialized.");
     }
 
     @Test

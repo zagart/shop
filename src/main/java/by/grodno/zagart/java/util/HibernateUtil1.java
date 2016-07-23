@@ -12,22 +12,22 @@ import org.hibernate.service.ServiceRegistry;
 /**
  * Class which combines classes of Hibernate and use them.
  */
-public class HibernateUtil {
+public class HibernateUtil1 {
 
     private static final SessionFactory factory;
     private static Session currentSession;
     private static Transaction currentTransaction;
 
-    private HibernateUtil() {}
+    private HibernateUtil1() {}
 
     static {
         ServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
         Metadata metadata = new MetadataSources(standardRegistry)
-                .addAnnotatedClass(Product.class)
-                .addAnnotatedClass(Order.class)
-                .addAnnotatedClass(OrderProduct.class)
+                .addAnnotatedClass(Product1.class)
+                .addAnnotatedClass(Order1.class)
+                .addAnnotatedClass(OrderProduct1.class)
                 .buildMetadata();
         factory = metadata.buildSessionFactory();
     }

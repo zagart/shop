@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Random;
 
-import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
+import static by.grodno.zagart.java.util.CommonUtil1.randomOrderProductList;
 
 /**
  * Test for product class.
@@ -17,12 +17,12 @@ import static by.grodno.zagart.java.util.CommonUtil.randomOrderProductList;
 public class ProductTest implements Loggable {
 
     private Random rnd = new Random();
-    private Product product = new Product();
+    private Product1 product = new Product1();
     private Long id = rnd.nextLong();
     private String name = RandomStringUtils.randomAlphabetic(100);
     private String description = RandomStringUtils.randomAlphabetic(100);
     private Long cost = rnd.nextLong();
-    private List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
+    private List<OrderProduct1> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
 
     @Before
     public void init() {
@@ -31,7 +31,7 @@ public class ProductTest implements Loggable {
         product.setDescription(description);
         product.setCost(cost);
         product.setOrderProduct(orderProducts);
-        logger.info("Product test initialized.");
+        logger.info("Product1 test initialized.");
     }
 
     @Test

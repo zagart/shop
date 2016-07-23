@@ -8,21 +8,20 @@ import org.hibernate.Criteria;
 import java.io.Serializable;
 import java.util.List;
 
-import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
+import static by.grodno.zagart.java.util.HibernateUtil1.getCurrentSession;
 
 /**
  * Created by Zagart on 23.07.2016.
  */
-public abstract class AbstractDao
+public abstract class AbstractHibernateDao
                      <T extends IdentifiableEntity,
                      PK extends Serializable>
-                     implements GenericDao<T, PK>, Loggable, ReflectiveGeneric {
+                     implements GenericDao1<T, PK>, Loggable, ReflectiveGeneric {
 
     private final T entityObj;
 
     { entityObj = (T) getGenericObject(0, logger); }
 
-        @Override
     public PK save(T obj) {
         getCurrentSession().save(obj);
         return (PK) obj.getId();

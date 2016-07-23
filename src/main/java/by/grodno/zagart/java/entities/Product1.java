@@ -13,17 +13,17 @@ import java.util.List;
  */
 @Entity
 @Table(name = "shop_product")
-public class Product implements IdentifiableEntity<Long> {
+public class Product1 implements IdentifiableEntity<Long> {
 
-    private static String entityName = "Product";
+    private static String entityName = "Product1";
 
     private Long id;
     private String name;
     private String description;
     private Long cost;
-    private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
+    private List<OrderProduct1> orderProduct = new ArrayList<OrderProduct1>();
 
-    public static void setEntityName(String entityName) { Product.entityName = entityName; }
+    public static void setEntityName(String entityName) { Product1.entityName = entityName; }
     public String getEntityName() { return entityName; }
 
     @Id
@@ -41,14 +41,14 @@ public class Product implements IdentifiableEntity<Long> {
     public void setCost(Long cost) { this.cost = cost; }
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    public List<OrderProduct> getOrderProduct() { return orderProduct; }
-    public void setOrderProduct(List<OrderProduct> orderProduct) { this.orderProduct = orderProduct; }
+    public List<OrderProduct1> getOrderProduct() { return orderProduct; }
+    public void setOrderProduct(List<OrderProduct1> orderProduct) { this.orderProduct = orderProduct; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
+        Product1 product = (Product1) o;
         return new EqualsBuilder()
                 .append(getId(), product.getId())
                 .append(getName(), product.getName())

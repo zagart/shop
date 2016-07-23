@@ -2,8 +2,8 @@ package by.grodno.zagart.java;
 
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 
-import static by.grodno.zagart.java.util.CommonUtil.createOrders;
-import static by.grodno.zagart.java.util.HibernateUtil.closeFactory;
+import static by.grodno.zagart.java.util.CommonUtil1.createOrders;
+import static by.grodno.zagart.java.util.HibernateUtil1.closeFactory;
 
 /**
  * Main class with entry point.
@@ -14,8 +14,8 @@ public class Main {
 
     public static void main(String[] args ) {
         createOrders(10);
-//        OrderDaoImpl orderDao = new OrderDaoImpl();
-//        ProductDaoImpl productDao = new ProductDaoImpl();
+//        OrderDaoImpl1 orderDao = new OrderDaoImpl1();
+//        ProductDaoImpl1 productDao = new ProductDaoImpl1();
 //        getOrderInfo(orderDao.getById(1L));
 //        getOrderNumberByQuantityBySum(4L,6L);
 //        getOrderByProduct(productDao.getById(7L));
