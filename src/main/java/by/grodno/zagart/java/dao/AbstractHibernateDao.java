@@ -45,7 +45,7 @@ public abstract class AbstractHibernateDao
 
     @Override
     public T getById(PK id) {
-        return (T) getCurrentSession().load(entityObj.getClass(), id);
+        return (T) getCurrentSession().get(entityObj.getClass(), id);
     }
 
     @Override

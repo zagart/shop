@@ -6,6 +6,9 @@ import by.grodno.zagart.java.dao.impl.ProductDaoImpl;
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.entities.OrderProduct;
 import by.grodno.zagart.java.entities.Product;
+import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
+import by.grodno.zagart.java.services.impl.OrderServiceImpl;
+import by.grodno.zagart.java.services.impl.ProductServiceImpl;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -24,25 +27,29 @@ import static org.apache.commons.lang3.time.DateUtils.*;
  */
 public class MainUtil {
 
+    private static OrderServiceImpl orderService = new OrderServiceImpl();
+    private static OrderProductServiceImpl orderProductService = new OrderProductServiceImpl();
+    private static ProductServiceImpl productService = new ProductServiceImpl();
+
     public static void getOrderInfo(Order order) {
+        Order pulledOrder = orderService.getById(order.getId());
         System.out.printf("Order id: %s; \n" +
                         "Number: %s; \n" +
                         "Date of order: %s; \n" +
                         "Order-product table: \n",
-                order.getId(),
-                order.getNumber(),
-                order.getDateOfOrder());
-        for (OrderProduct op : order.getOrderProduct()) {
+                pulledOrder.getId(),
+                pulledOrder.getNumber(),
+                pulledOrder.getDateOfOrder());
+        List<OrderProduct> list = orderProductService.getByCriterion(Restrictions.eq("order", order));
+        for (OrderProduct op : list) {
             System.out.println("Product name: " + op.getProduct().getName() + ", quantity in order: " + op.getQuantity());
         }
     }
 
     public static void getOrderNumberByQuantityBySum(Long condition1, Long condition2) {
-        OrderProductDaoImpl orderProductDao = new OrderProductDaoImpl();
-        Criteria criteria = getSessionFactory().openSession().createCriteria(OrderProduct.class);
-        criteria.add(Restrictions.le("quantity", condition1));
-        List<OrderProduct> list = new ArrayList<OrderProduct>(orderProductDao
-                .getByCriteria(criteria));
+        List<Criterion> criterions = new ArrayList<>();
+        criterions.add(Restrictions.gt("id", condition1));
+        List<OrderProduct> list = orderProductService.getByCriterion(criterions);
         for (OrderProduct op : list) {
             System.out.println(op.getOrder().getNumber() + " " + op.getQuantity());
         }

@@ -19,34 +19,28 @@ import java.util.Random;
  */
 public class CommonUtil {
 
+    private static Random rnd = new Random();
+
     private static OrderServiceImpl orderService = new OrderServiceImpl();
     private static OrderProductServiceImpl orderProductService = new OrderProductServiceImpl();
     private static ProductServiceImpl productService = new ProductServiceImpl();
 
     public static void createOrders(int quantity) {
         for (int i = 0; i < quantity; i++) {
-            Random rnd = new Random();
-            Product product = new Product();
-            product.setDescription(RandomStringUtils.randomAlphabetic(20));
-            product.setName(RandomStringUtils.randomAlphabetic(10));
-            product.setCost((long)rnd.nextInt(100));
+            Product product = randomProduct();
             productService.save(product);
-            Order order = new Order();
-            order.setNumber(RandomStringUtils.randomNumeric(6));
-            order.setDateOfOrder(randomDate());
+            Order order = randomOrder();
             OrderProduct orderProduct = new OrderProduct();
             orderProduct.addOrderProduct(order, product, (long)rnd.nextInt(100));
             orderService.save(order);
             orderProductService.save(orderProduct);
-            product = new Product();
-            product.setDescription(RandomStringUtils.randomAlphabetic(20));
-            product.setName(RandomStringUtils.randomAlphabetic(10));
-            product.setCost(317L);
+            productService.update(product);
+            product = randomProduct();
             productService.save(product);
-            orderProduct = new OrderProduct();
             orderProduct.addOrderProduct(order, product,(long)rnd.nextInt(10));
             orderService.update(order);
-            orderProductService.save(orderProduct);
+            orderProductService.update(orderProduct);
+            productService.update(product);
         }
     }
 
@@ -59,19 +53,21 @@ public class CommonUtil {
     }
 
     public static Product randomProduct() {
-        Random rnd = new Random();
         Product product = new Product();
-        Long id = rnd.nextLong();
-        String name = RandomStringUtils.randomAlphabetic(100);
-        String description = RandomStringUtils.randomAlphabetic(100);
+        String name = RandomStringUtils.randomAlphabetic(6);
+        String description = RandomStringUtils.randomAlphabetic(10);
         Long cost = rnd.nextLong();
-        List<OrderProduct> orderProducts = randomOrderProductList((long) rnd.nextInt(100));
-        product.setId(id);
         product.setName(name);
         product.setDescription(description);
         product.setCost(cost);
-        product.setOrderProduct(orderProducts);
         return product;
+    }
+
+    public static Order randomOrder() {
+        Order order = new Order();
+        order.setNumber(RandomStringUtils.randomNumeric(6));
+        order.setDateOfOrder(randomDate());
+        return order;
     }
 
     public static Date randomDate() {
