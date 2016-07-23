@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.services;
+package by.grodno.zagart.java.util;
 
 import by.grodno.zagart.java.dao.impl.OrderDaoImpl;
 import by.grodno.zagart.java.dao.impl.OrderProductDaoImpl;
@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.time.DateUtils.*;
 /**
  * Created by Zagart on 14.07.2016.
  */
-public class MainService {
+public class MainUtil {
 
     public static void getOrderInfo(Order order) {
         System.out.printf("Order id: %s; \n" +

@@ -1,5 +1,6 @@
 package by.grodno.zagart.java.entities;
 
+import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

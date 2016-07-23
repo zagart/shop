@@ -19,6 +19,6 @@ public interface GenericDao<T, PK extends Serializable> {
 
     void delete(final PK id);
 
-    void delete(final T persistentObject);
+    void delete(final T obj);
 
 }

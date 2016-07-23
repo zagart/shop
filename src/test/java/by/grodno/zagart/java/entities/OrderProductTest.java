@@ -1,6 +1,6 @@
 package by.grodno.zagart.java.entities;
 
-import by.grodno.zagart.java.util.Loggable;
+import by.grodno.zagart.java.interfaces.Loggable;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

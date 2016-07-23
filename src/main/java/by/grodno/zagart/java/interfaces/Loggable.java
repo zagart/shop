@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.util;
+package by.grodno.zagart.java.interfaces;
 
 import org.apache.log4j.Logger;
 

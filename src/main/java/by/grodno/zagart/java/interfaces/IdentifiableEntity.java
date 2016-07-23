@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.entities;
+package by.grodno.zagart.java.interfaces;
 
 import java.io.Serializable;
 

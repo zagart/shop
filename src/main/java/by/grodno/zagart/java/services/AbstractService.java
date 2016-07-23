@@ -1,17 +1,14 @@
 package by.grodno.zagart.java.services;
 
 import by.grodno.zagart.java.dao.GenericDao;
-import by.grodno.zagart.java.entities.IdentifiableEntity;
+import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import by.grodno.zagart.java.entities.Order;
-import by.grodno.zagart.java.services.GenericService;
-import by.grodno.zagart.java.util.Loggable;
+import by.grodno.zagart.java.interfaces.Loggable;
+import by.grodno.zagart.java.interfaces.ReflectiveGeneric;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import static by.grodno.zagart.java.util.HibernateUtil.*;
@@ -23,34 +20,14 @@ public abstract class AbstractService
                     <T extends IdentifiableEntity,
                     PK extends Serializable,
                     DAO extends GenericDao>
+                    implements GenericService<T, PK>, Loggable, ReflectiveGeneric {
 
-                    implements GenericService<T, PK>, Loggable {
-
-    private GenericDao dao = (GenericDao) getGenericObject(2);
+    private GenericDao dao = (GenericDao) getGenericObject(2, logger);
     private final T entityObj;
 
-    { entityObj = (T) getGenericObject(0); }
+    { entityObj = (T) getGenericObject(0, logger); }
 
-    public AbstractService() {
-    }
-
-    private Object getGenericObject(int position) {
-        ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-        Class<?> daoClass = (Class<?>) parameterizedType.getActualTypeArguments()[position];
-        Constructor<?> constructor = daoClass.getConstructors()[0];
-        Object object = null;
-        try {
-            object = constructor.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return object;
-    }
-
+    @Override
     public PK save(T obj) {
         openCurrentSessionWithTransaction();
         dao.save(obj);
@@ -61,6 +38,7 @@ public abstract class AbstractService
         return (PK) obj.getId();
     }
 
+    @Override
     public void update(T obj) {
         openCurrentSessionWithTransaction();
         dao.update(obj);
@@ -70,6 +48,7 @@ public abstract class AbstractService
                 obj.getId()));
     }
 
+    @Override
     public List<T> getAll() {
         openCurrentSession();
         List<T> daoAll = dao.getAll();
@@ -80,6 +59,7 @@ public abstract class AbstractService
         return daoAll;
     }
 
+    @Override
     public List<T> getByCriterion(Criterion criterion) {
         openCurrentSession();
         Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass()).add(criterion);
@@ -91,6 +71,7 @@ public abstract class AbstractService
         return (List<T>) daoByCriteria;
     }
 
+    @Override
     public List<T> getByCriterion(List<Criterion> criterions) {
         openCurrentSession();
         Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass());
@@ -103,6 +84,7 @@ public abstract class AbstractService
         return (List<T>) daoByCriteria;
     }
 
+    @Override
     public T getById(PK id) {
         openCurrentSession();
         T obj = (T) dao.getById(id);
@@ -113,6 +95,7 @@ public abstract class AbstractService
         return obj;
     }
 
+    @Override
     public void delete(PK id) {
         openCurrentSessionWithTransaction();
         dao.delete(id);
@@ -120,6 +103,7 @@ public abstract class AbstractService
         logger.info(String.format("%s object deleted from database by id = %d.", entityObj.getEntityName(), id));
     }
 
+    @Override
     public void delete(T obj) {
         openCurrentSessionWithTransaction();
         dao.delete(obj);
@@ -128,4 +112,5 @@ public abstract class AbstractService
                 entityObj.getEntityName(),
                 obj.getId()));
     }
+
 }
