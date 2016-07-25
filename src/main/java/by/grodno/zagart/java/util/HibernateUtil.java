@@ -1,6 +1,8 @@
 package by.grodno.zagart.java.util;
 
-import by.grodno.zagart.java.entities.*;
+import by.grodno.zagart.java.entities.Order;
+import by.grodno.zagart.java.entities.OrderProduct;
+import by.grodno.zagart.java.entities.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

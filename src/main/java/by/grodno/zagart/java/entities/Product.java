@@ -23,8 +23,10 @@ public class Product implements IdentifiableEntity<Long> {
     private Long cost;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
 
-    public static void setEntityName(String entityName) { Product.entityName = entityName; }
+    @Transient
     public String getEntityName() { return entityName; }
+    public static void setEntityName(String entityName) { Product.entityName = entityName; }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

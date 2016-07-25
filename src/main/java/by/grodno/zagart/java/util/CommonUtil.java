@@ -31,13 +31,13 @@ public class CommonUtil {
             productService.save(product);
             Order order = randomOrder();
             OrderProduct orderProduct = new OrderProduct();
-            orderProduct.addOrderProduct(order, product, (long)rnd.nextInt(100));
+            orderProduct.addOrderProduct(order, product, 1 + (long)rnd.nextInt(100));
             orderService.save(order);
             orderProductService.save(orderProduct);
             productService.update(product);
             product = randomProduct();
             productService.save(product);
-            orderProduct.addOrderProduct(order, product,(long)rnd.nextInt(10));
+            orderProduct.addOrderProduct(order, product, 1 + (long)rnd.nextInt(10));
             orderService.update(order);
             orderProductService.update(orderProduct);
             productService.update(product);

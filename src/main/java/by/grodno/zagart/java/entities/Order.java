@@ -5,7 +5,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Class that represents a product.
@@ -21,6 +23,7 @@ public class Order implements IdentifiableEntity<Long> {
     private Date dateOfOrder;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
 
+    @Transient
     public String getEntityName() { return entityName; }
     public static void setEntityName(String entityName) { Order.entityName = entityName; }
 

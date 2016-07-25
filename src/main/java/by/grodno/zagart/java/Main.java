@@ -1,7 +1,5 @@
 package by.grodno.zagart.java;
 
-import by.grodno.zagart.java.dao.impl.OrderDaoImpl;
-import by.grodno.zagart.java.dao.impl.ProductDaoImpl;
 import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 import by.grodno.zagart.java.services.impl.ProductServiceImpl;
@@ -9,6 +7,7 @@ import by.grodno.zagart.java.services.impl.ProductServiceImpl;
 import static by.grodno.zagart.java.util.CommonUtil.createOrders;
 import static by.grodno.zagart.java.util.HibernateUtil.closeFactory;
 import static by.grodno.zagart.java.util.MainUtil.getOrderInfo;
+import static by.grodno.zagart.java.util.MainUtil.getOrderNumberByQuantityBySum;
 
 /**
  * Main class with entry point.

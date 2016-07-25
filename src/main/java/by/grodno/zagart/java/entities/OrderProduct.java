@@ -22,6 +22,7 @@ public class OrderProduct implements IdentifiableEntity<Long> {
     private Product product;
     private Long quantity;
 
+    @Transient
     public String getEntityName() { return entityName; }
     public static void setEntityName(String entityName) { OrderProduct.entityName = entityName; }
 
