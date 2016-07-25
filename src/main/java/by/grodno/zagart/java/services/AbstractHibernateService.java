@@ -85,6 +85,17 @@ public abstract class AbstractHibernateService
     }
 
     @Override
+    public List<T> getListByQuery(String hql) {
+        openCurrentSession();
+        List<T> daoListByQuery = dao.getListByQuery(hql);
+        closeCurrentSession();
+        logger.info(String.format("%s objects pulled from database by query(%d).",
+                entityObj.getEntityName(),
+                daoListByQuery.size()));
+        return daoListByQuery;
+    }
+
+    @Override
     public T getById(PK id) {
         openCurrentSession();
         T obj = (T) dao.getById(id);

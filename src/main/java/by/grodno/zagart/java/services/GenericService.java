@@ -20,6 +20,8 @@ public interface GenericService<T, PK extends Serializable> {
 
     List<T> getByCriterion(List<Criterion> criterions);
 
+    List<T> getListByQuery(String hql);
+
     T getById(final PK id);
 
     void delete(final PK id);

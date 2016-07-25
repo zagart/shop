@@ -44,6 +44,11 @@ public abstract class AbstractHibernateDao
     }
 
     @Override
+    public List<T> getListByQuery(String hql) {
+        return (List<T>) getCurrentSession().createQuery(hql);
+    }
+
+    @Override
     public T getById(PK id) {
         return (T) getCurrentSession().get(entityObj.getClass(), id);
     }
