@@ -20,7 +20,7 @@ public abstract class AbstractHibernateDao
 
     private final T entityObj;
 
-    { entityObj = (T) getGenericObject(0, logger); }
+    { entityObj = (T) getGenericObject(0); }
 
     public PK save(T obj) {
         getCurrentSession().save(obj);

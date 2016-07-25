@@ -22,10 +22,10 @@ public abstract class AbstractHibernateService
                     DAO extends GenericDao>
                     implements GenericService<T, PK>, Loggable, ReflectiveGeneric {
 
-    private GenericDao dao = (GenericDao) getGenericObject(2, logger);
+    private GenericDao dao = (GenericDao) getGenericObject(2);
     private final T entityObj;
 
-    { entityObj = (T) getGenericObject(0, logger); }
+    { entityObj = (T) getGenericObject(0); }
 
     @Override
     public PK save(T obj) {

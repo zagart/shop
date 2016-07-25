@@ -1,7 +1,5 @@
 package by.grodno.zagart.java.interfaces;
 
-import org.apache.log4j.Logger;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -9,9 +7,9 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by Zagart on 23.07.2016.
  */
-public interface ReflectiveGeneric {
+public interface ReflectiveGeneric extends Loggable {
 
-    default Object getGenericObject(int parameterPosition, Logger logger) {
+    default Object getGenericObject(int parameterPosition) {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> clazz = (Class<?>) parameterizedType.getActualTypeArguments()[parameterPosition];
         Constructor<?> constructor = clazz.getConstructors()[0];

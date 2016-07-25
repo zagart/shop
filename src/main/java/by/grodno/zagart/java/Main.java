@@ -7,7 +7,6 @@ import by.grodno.zagart.java.services.impl.ProductServiceImpl;
 import static by.grodno.zagart.java.util.CommonUtil.createOrders;
 import static by.grodno.zagart.java.util.HibernateUtil.closeFactory;
 import static by.grodno.zagart.java.util.MainUtil.getOrderInfo;
-import static by.grodno.zagart.java.util.MainUtil.getOrderNumberByQuantityBySum;
 
 /**
  * Main class with entry point.
