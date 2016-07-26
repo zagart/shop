@@ -27,7 +27,7 @@ public class Main {
         getOrderInfo(orderService.getById(1L));
         getOrderNumberByQuantityBySum(4L,2L);
         getOrderByProduct(productService.getById(7L));
-//        getOrderNotContainProductByDate(productService.getById(7L), orderService.getById(1L).getDateOfOrder());
+        getOrderNotContainProductByDate(productService.getById(20L));
 //        createNewOrderByDay(orderService.getById(8L).getDateOfOrder());
 //        testHql();
         closeFactory();

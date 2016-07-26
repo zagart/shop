@@ -64,18 +64,13 @@ public class MainUtil {
         }
     }
 
-    public static void getOrderNotContainProductByDate(Product product, Date date) {
-        Date dayStart = CommonUtil.setDayStart(new Date());
-        Date dayEnd = CommonUtil.setDayEnd(new Date());
-        Order order = new Order();
-        order.setNumber("199426");
-        order.setDateOfOrder(dayEnd);
-        orderService.save(order);
+    public static void getOrderNotContainProductByDate(Product product) {
         ArrayList<Order> orderServiceListByQuery = (ArrayList<Order>) orderService.getListByQuery(String
-                .format("select order from Order order " +
-                        "where order.id > 0 " +
-                        "and order.id > 0",
-//                        "and current_date < all elements(order.dateOfOrder)",
+                .format("select o from Order o " +
+                        "join o.orderProduct op " +
+                        "where o = op.order " +
+                        "and o.dateOfOrder = current_date " +
+                        "and op.product != %d",
                         product.getId()));
         for (Order o : orderServiceListByQuery) {
             System.out.println("#4 " + o.getNumber());
@@ -83,10 +78,8 @@ public class MainUtil {
     }
 
     public static void createNewOrderByDay(Date date) {
-        OrderDaoImpl orderDao = new OrderDaoImpl();
-        OrderProductDaoImpl orderProductDao = new OrderProductDaoImpl();
-        Date dayStart = CommonUtil.setDayStart(date);
-        Date dayEnd = CommonUtil.setDayEnd(date);
+
+
     }
 
 }

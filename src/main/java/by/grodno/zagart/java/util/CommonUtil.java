@@ -28,7 +28,7 @@ public class CommonUtil {
     private static ProductServiceImpl productService = new ProductServiceImpl();
 
     public static void createOrders(int quantity) {
-        for (int i = 0; i < quantity; i++) {
+        for (int i = 0; i < quantity - 1; i++) {
             Product product = randomProduct();
             productService.save(product);
             Order order = randomOrder();
@@ -44,6 +44,20 @@ public class CommonUtil {
             orderProductService.update(orderProduct);
             productService.update(product);
         }
+    }
+
+    public static Order createThisDayOrder(Product product) {
+        Order order = new Order();
+        order.setNumber("199426");
+        order.setDateOfOrder(new Date());
+        OrderProduct orderProduct = new OrderProduct();
+        productService.save(product);
+        orderService.save(order);
+        orderProduct.addOrderProduct(order, product, 1L);
+        orderProductService.save(orderProduct);
+        productService.update(product);
+        orderService.update(order);
+        return order;
     }
 
     public static List<OrderProduct> randomOrderProductList(Long size) {
@@ -78,14 +92,6 @@ public class CommonUtil {
         date = DateUtils.setMonths(date, 1 + rnd.nextInt(11));
         date = DateUtils.setDays(date, 1 + rnd.nextInt(28));
         return date;
-    }
-
-    public static Date setDayStart(Date date) {
-        return setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0);
-    }
-
-    public static Date setDayEnd(Date date) {
-        return setHours(setMinutes(setSeconds(setMilliseconds(date, 999), 59), 59), 23);
     }
 
 }

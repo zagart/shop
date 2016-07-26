@@ -4,6 +4,7 @@ import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.ReflectiveGeneric;
 import org.hibernate.Criteria;
+import org.hibernate.annotations.NamedQuery;
 
 import java.io.Serializable;
 import java.util.List;
