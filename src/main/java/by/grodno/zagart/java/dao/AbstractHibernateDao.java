@@ -45,7 +45,7 @@ public abstract class AbstractHibernateDao
 
     @Override
     public List<T> getListByQuery(String hql) {
-        return (List<T>) getCurrentSession().createQuery(hql);
+        return (List<T>) getCurrentSession().createQuery(hql).getResultList();
     }
 
     @Override

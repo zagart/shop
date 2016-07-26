@@ -36,6 +36,7 @@ public class Order implements IdentifiableEntity<Long> {
     public void setNumber(String number) { this.number = number; }
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_order")
     public Date getDateOfOrder() { return dateOfOrder; }
     public void setDateOfOrder(Date dateOfOrder) { this.dateOfOrder = dateOfOrder; }
 

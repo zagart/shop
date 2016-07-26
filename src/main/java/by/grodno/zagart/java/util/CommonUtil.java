@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import static org.apache.commons.lang3.time.DateUtils.*;
+
 /**
  * Utility class.
  */
@@ -76,6 +78,14 @@ public class CommonUtil {
         date = DateUtils.setMonths(date, 1 + rnd.nextInt(11));
         date = DateUtils.setDays(date, 1 + rnd.nextInt(28));
         return date;
+    }
+
+    public static Date setDayStart(Date date) {
+        return setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0);
+    }
+
+    public static Date setDayEnd(Date date) {
+        return setHours(setMinutes(setSeconds(setMilliseconds(date, 999), 59), 59), 23);
     }
 
 }
