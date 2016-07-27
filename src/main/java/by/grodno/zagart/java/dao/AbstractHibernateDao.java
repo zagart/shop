@@ -2,9 +2,8 @@ package by.grodno.zagart.java.dao;
 
 import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import by.grodno.zagart.java.interfaces.Loggable;
-import by.grodno.zagart.java.interfaces.ReflectiveGeneric;
+import by.grodno.zagart.java.interfaces.Reflective;
 import org.hibernate.Criteria;
-import org.hibernate.annotations.NamedQuery;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,12 +11,12 @@ import java.util.List;
 import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
 
 /**
- * Created by Zagart on 23.07.2016.
+ * Abstract class represents DAO layer.
  */
 public abstract class AbstractHibernateDao
                      <T extends IdentifiableEntity,
                      PK extends Serializable>
-                     implements GenericDao<T, PK>, Loggable, ReflectiveGeneric {
+                     implements GenericDao<T, PK>, Loggable, Reflective {
 
     private final T entityObj;
 
@@ -30,6 +29,7 @@ public abstract class AbstractHibernateDao
 
     @Override
     public void update(T obj) {
+        getCurrentSession().persist(obj);
         getCurrentSession().update(obj);
     }
 

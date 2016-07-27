@@ -16,9 +16,13 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
 
+    public static final int BATCH_SIZE = 20;
+
     private static final SessionFactory factory;
     private static Session currentSession;
     private static Transaction currentTransaction;
+
+    private static int batch = 0;
 
     private HibernateUtil() {}
 
@@ -54,10 +58,20 @@ public class HibernateUtil {
     }
 
     public static void closeCurrentSession() {
+        if (++batch % BATCH_SIZE == 0) {
+            currentSession.flush();
+            currentSession.clear();
+            batch = 1;
+        }
         currentSession.close();
     }
 
     public static void closeCurrentSessionWithTransaction() {
+        if (++batch % BATCH_SIZE == 0) {
+            currentSession.flush();
+            currentSession.clear();
+            batch = 1;
+        }
         currentTransaction.commit();
         currentSession.close();
     }

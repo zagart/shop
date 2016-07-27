@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that represents a product.
+ * Entity that represents a product.
  */
 @Entity
 @Table(name = "shop_product")

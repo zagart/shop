@@ -4,7 +4,7 @@ import by.grodno.zagart.java.dao.GenericDao;
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import by.grodno.zagart.java.interfaces.Loggable;
-import by.grodno.zagart.java.interfaces.ReflectiveGeneric;
+import by.grodno.zagart.java.interfaces.Reflective;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 
@@ -20,7 +20,7 @@ public abstract class AbstractHibernateService
                     <T extends IdentifiableEntity,
                     PK extends Serializable,
                     DAO extends GenericDao>
-                    implements GenericService<T, PK>, Loggable, ReflectiveGeneric {
+                    implements GenericService<T, PK>, Loggable, Reflective {
 
     private GenericDao dao = (GenericDao) getGenericObject(2);
     private final T entityObj;

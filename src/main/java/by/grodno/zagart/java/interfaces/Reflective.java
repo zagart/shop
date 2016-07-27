@@ -5,10 +5,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * Created by Zagart on 23.07.2016.
+ * This interface defines ability of objects of this class
+ * to use methods that based on reflection.
  */
-public interface ReflectiveGeneric extends Loggable {
+public interface Reflective extends Loggable {
 
+    /**
+     * The method creates object of class which is
+     * in generic parameters at pointed position.
+     *
+     * @param parameterPosition
+     * @return
+     */
     default Object getGenericObject(int parameterPosition) {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> clazz = (Class<?>) parameterizedType.getActualTypeArguments()[parameterPosition];

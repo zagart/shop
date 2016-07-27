@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Class that provides connection between a product
+ * Entity that provides connection between a product
  * and order.
  */
 @Entity

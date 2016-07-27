@@ -1,27 +1,17 @@
 package by.grodno.zagart.java.util;
 
-import by.grodno.zagart.java.dao.impl.OrderDaoImpl;
-import by.grodno.zagart.java.dao.impl.OrderProductDaoImpl;
-import by.grodno.zagart.java.dao.impl.ProductDaoImpl;
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.entities.OrderProduct;
 import by.grodno.zagart.java.entities.Product;
 import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 import by.grodno.zagart.java.services.impl.ProductServiceImpl;
-import org.apache.commons.lang3.time.DateUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import static by.grodno.zagart.java.util.HibernateUtil.getSessionFactory;
-import static org.apache.commons.lang3.time.DateUtils.*;
 
 /**
  * Created by Zagart on 14.07.2016.
@@ -42,44 +32,83 @@ public class MainUtil {
                 orderServiceById.getNumber(),
                 orderServiceById.getDateOfOrder());
         List<OrderProduct> listByCriterion = orderProductService.getByCriterion(Restrictions.eq("order", order));
-        for (OrderProduct op : listByCriterion) {
-            System.out.println("#1 product name: " + op.getProduct().getName() + ", quantity in order: " + op.getQuantity());
+        if (!listByCriterion.isEmpty()) {
+            for (OrderProduct op : listByCriterion) {
+                System.out.println("#1 product name: " + op.getProduct().getName() + ", quantity in order: " + op.getQuantity());
+            }
+        } else {
+            System.out.println("#1 no records found.");
         }
     }
 
     public static void getOrderNumberByQuantityBySum(Long condition1, Long condition2) {
         String hql = String.format("select o from Order o where size(o.orderProduct) = %d", condition2);
         ArrayList<Order> listByQuery = (ArrayList<Order>) orderService.getListByQuery(hql);
-        for (Order o : listByQuery) {
-            System.out.println("#2 order " + o.getNumber());
+        if (!listByQuery.isEmpty()) {
+            for (Order o : listByQuery) {
+                System.out.println("#2 order " + o.getNumber());
+            }
+        } else {
+            System.out.println("#2 no records found.");
         }
     }
 
     public static void getOrderByProduct(Product product) {
         ArrayList<OrderProduct> listByQuery = (ArrayList<OrderProduct>) orderProductService
                 .getListByQuery(String.format("from OrderProduct op where op.product.id = %d", product.getId()));
-        System.out.println("#3 orders which contain product with id = " + product.getId());
-        for (OrderProduct op : listByQuery) {
-            System.out.println(op.getOrder().getNumber());
+        if (!listByQuery.isEmpty()) {
+            System.out.println("#3 orders which contain product with id = " + product.getId());
+            for (OrderProduct op : listByQuery) {
+                System.out.println(op.getOrder().getNumber());
+            }
+        } else {
+            System.out.println("#3 no records found.");
         }
     }
 
-    public static void getOrderNotContainProductByDate(Product product) {
-        ArrayList<Order> orderServiceListByQuery = (ArrayList<Order>) orderService.getListByQuery(String
+    public static void getOrderNotContainProductOfTheDay(Product product) {
+        ArrayList<Order> listByQuery = (ArrayList<Order>) orderService.getListByQuery(String
                 .format("select o from Order o " +
                         "join o.orderProduct op " +
                         "where o = op.order " +
                         "and o.dateOfOrder = current_date " +
                         "and op.product != %d",
                         product.getId()));
-        for (Order o : orderServiceListByQuery) {
-            System.out.println("#4 " + o.getNumber());
+        if (!listByQuery.isEmpty()) {
+            for (Order o : listByQuery) {
+                System.out.println("#4 " + o.getNumber());
+            }
+        } else {
+            System.out.println("#4 no records found.");
         }
     }
 
-    public static void createNewOrderByDay(Date date) {
-
-
+    public static void createNewOrderOfTheDay() {
+        ArrayList<Product> listByQuery = (ArrayList<Product>) productService
+                .getListByQuery("select p from Product p " +
+                        "join p.orderProduct op " +
+                        "join op.order o " +
+                        "where p = op.product " +
+                        "and o = op.order " +
+                        "and o.dateOfOrder = current_date");
+        if (!listByQuery.isEmpty()) {
+            for (Product p : listByQuery) {
+                System.out.println("#5 " + p.getName());
+            }
+//            OrderProduct orderProduct = new OrderProduct();
+//            orderProductService.save(orderProduct);
+//            Order order = new Order();
+//            orderService.save(order);
+//            order.setNumber(RandomStringUtils.randomNumeric(6));
+//            order.setDateOfOrder(new Date());
+//            for (int i = 0; i < listByQuery.size(); i++) {
+//                orderProduct.addOrderProduct(order, listByQuery.get(i), 1L);
+//            }
+//            orderService.update(order);
+//            orderProductService.update(orderProduct);
+        } else {
+            System.out.println("#5 no records found.");
+        }
     }
 
 }

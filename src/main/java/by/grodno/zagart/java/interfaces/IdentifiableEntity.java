@@ -3,7 +3,9 @@ package by.grodno.zagart.java.interfaces;
 import java.io.Serializable;
 
 /**
- * Created by Zagart on 22.07.2016.
+ * This interface defines ability of class to have unique
+ * identifier and to have text definition of entity. Mainly
+ * used for convenience to make logging more informative.
  */
 public interface IdentifiableEntity<PK extends Serializable> {
 

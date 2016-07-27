@@ -44,6 +44,7 @@ public class CommonUtil {
             orderProductService.update(orderProduct);
             productService.update(product);
         }
+        createThisDayOrder(randomProduct());
     }
 
     public static Order createThisDayOrder(Product product) {

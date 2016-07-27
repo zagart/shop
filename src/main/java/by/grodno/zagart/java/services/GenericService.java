@@ -6,7 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Zagart on 22.07.2016.
+ * Interface that defines methods which necassary
+ * for service classes.
+ *
+ * @param <T>
+ * @param <PK>
  */
 public interface GenericService<T, PK extends Serializable> {
 
