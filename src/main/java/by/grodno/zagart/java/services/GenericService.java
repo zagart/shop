@@ -26,6 +26,8 @@ public interface GenericService<T, PK extends Serializable> {
 
     List<T> getListByQuery(String hql);
 
+    void executeQuery(String hql);
+
     T getById(final PK id);
 
     void delete(final PK id);

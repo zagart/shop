@@ -14,7 +14,11 @@ import java.util.List;
 import static by.grodno.zagart.java.util.HibernateUtil.*;
 
 /**
- * Created by Zagart on 22.07.2016.
+ * Abstract class represents service layer.
+ *
+ * @param <T>
+ * @param <PK>
+ * @param <DAO>
  */
 public abstract class AbstractHibernateService
                     <T extends IdentifiableEntity,
@@ -93,6 +97,15 @@ public abstract class AbstractHibernateService
                 entityObj.getEntityName(),
                 daoListByQuery.size()));
         return daoListByQuery;
+    }
+
+    @Override
+    public void executeQuery(String hql) {
+        openCurrentSessionWithTransaction();
+        dao.executeQuery(hql);
+        closeCurrentSessionWithTransaction();
+        logger.info(String.format("%s query executed.",
+                entityObj.getEntityName()));
     }
 
     @Override

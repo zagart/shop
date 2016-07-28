@@ -40,7 +40,7 @@ public class Order implements IdentifiableEntity<Long> {
     public Date getDateOfOrder() { return dateOfOrder; }
     public void setDateOfOrder(Date dateOfOrder) { this.dateOfOrder = dateOfOrder; }
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     public List<OrderProduct> getOrderProduct() { return orderProduct; }
     public void setOrderProduct(List<OrderProduct> orderProduct) { this.orderProduct = orderProduct; }
 

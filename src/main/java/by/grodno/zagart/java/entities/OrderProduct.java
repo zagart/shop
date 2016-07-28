@@ -46,12 +46,12 @@ public class OrderProduct implements IdentifiableEntity<Long> {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        List<OrderProduct> orderProduct = order.getOrderProduct();
-        orderProduct.add(this);
-        order.setOrderProduct(orderProduct);
-        orderProduct = product.getOrderProduct();
-        orderProduct.add(this);
-        product.setOrderProduct(orderProduct);
+        List<OrderProduct> list = order.getOrderProduct();
+        list.add(this);
+        order.setOrderProduct(list);
+        list = product.getOrderProduct();
+        list.add(this);
+        product.setOrderProduct(list);
     }
 
     @Override

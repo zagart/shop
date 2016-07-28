@@ -24,17 +24,22 @@ public class MainUtil {
 
     public static void getOrderInfo(Order order) {
         Order orderServiceById = orderService.getById(order.getId());
-        System.out.printf("#1 order id: %s; \n" +
+        System.out.print(String
+                .format("#1 order id: %s; \n" +
                         "#1 number: %s; \n" +
                         "#1 date of order: %s; \n" +
                         "#1 products in order: \n",
                 orderServiceById.getId(),
                 orderServiceById.getNumber(),
-                orderServiceById.getDateOfOrder());
+                orderServiceById.getDateOfOrder()));
         List<OrderProduct> listByCriterion = orderProductService.getByCriterion(Restrictions.eq("order", order));
         if (!listByCriterion.isEmpty()) {
             for (OrderProduct op : listByCriterion) {
-                System.out.println("#1 product name: " + op.getProduct().getName() + ", quantity in order: " + op.getQuantity());
+                System.out.println(String
+                        .format("#1 product name: %s, product cost: %d, quantity in order: %d",
+                                op.getProduct().getName(),
+                                op.getProduct().getCost(),
+                                op.getQuantity()));
             }
         } else {
             System.out.println("#1 no records found.");
@@ -46,7 +51,7 @@ public class MainUtil {
         ArrayList<Order> listByQuery = (ArrayList<Order>) orderService.getListByQuery(hql);
         if (!listByQuery.isEmpty()) {
             for (Order o : listByQuery) {
-                System.out.println("#2 order " + o.getNumber());
+                System.out.println(String.format("#2 order %s", o.getNumber()));
             }
         } else {
             System.out.println("#2 no records found.");
@@ -57,7 +62,7 @@ public class MainUtil {
         ArrayList<OrderProduct> listByQuery = (ArrayList<OrderProduct>) orderProductService
                 .getListByQuery(String.format("from OrderProduct op where op.product.id = %d", product.getId()));
         if (!listByQuery.isEmpty()) {
-            System.out.println("#3 orders which contain product with id = " + product.getId());
+            System.out.println(String.format("#3 orders which contain product with id = %d", product.getId()));
             for (OrderProduct op : listByQuery) {
                 System.out.println(op.getOrder().getNumber());
             }
@@ -66,7 +71,7 @@ public class MainUtil {
         }
     }
 
-    public static void getOrderNotContainProductOfTheDay(Product product) {
+    public static void getOrderOfTheDayNotContainProduct(Product product) {
         ArrayList<Order> listByQuery = (ArrayList<Order>) orderService.getListByQuery(String
                 .format("select o from Order o " +
                         "join o.orderProduct op " +
@@ -76,7 +81,7 @@ public class MainUtil {
                         product.getId()));
         if (!listByQuery.isEmpty()) {
             for (Order o : listByQuery) {
-                System.out.println("#4 " + o.getNumber());
+                System.out.println(String.format("#4 %s", o.getNumber()));
             }
         } else {
             System.out.println("#4 no records found.");
@@ -84,28 +89,26 @@ public class MainUtil {
     }
 
     public static void createNewOrderOfTheDay() {
-        ArrayList<Product> listByQuery = (ArrayList<Product>) productService
-                .getListByQuery("select p from Product p " +
-                        "join p.orderProduct op " +
-                        "join op.order o " +
-                        "where p = op.product " +
-                        "and o = op.order " +
-                        "and o.dateOfOrder = current_date");
+        Order order = new Order();
+        order.setDateOfOrder(new Date());
+        order.setNumber("#5_generated");
+        orderService.save(order);
+        OrderProduct orderProduct = new OrderProduct();
+        String hql = "select p from Product p " +
+                "join p.orderProduct op " +
+                "join op.order o " +
+                "where p = op.product " +
+                "and o = op.order " +
+                "and o.dateOfOrder = current_date";
+        ArrayList<Product> listByQuery = (ArrayList<Product>) productService.getListByQuery(hql);
         if (!listByQuery.isEmpty()) {
             for (Product p : listByQuery) {
-                System.out.println("#5 " + p.getName());
+                orderProduct.addOrderProduct(order, p, 1L);
+                productService.update(p);
             }
-//            OrderProduct orderProduct = new OrderProduct();
-//            orderProductService.save(orderProduct);
-//            Order order = new Order();
-//            orderService.save(order);
-//            order.setNumber(RandomStringUtils.randomNumeric(6));
-//            order.setDateOfOrder(new Date());
-//            for (int i = 0; i < listByQuery.size(); i++) {
-//                orderProduct.addOrderProduct(order, listByQuery.get(i), 1L);
-//            }
-//            orderService.update(order);
-//            orderProductService.update(orderProduct);
+            orderProductService.save(orderProduct);
+            orderService.update(order);
+            System.out.println("#5 new order created.");
         } else {
             System.out.println("#5 no records found.");
         }

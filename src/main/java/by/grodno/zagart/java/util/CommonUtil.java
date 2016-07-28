@@ -41,7 +41,7 @@ public class CommonUtil {
             productService.save(product);
             orderProduct.addOrderProduct(order, product, 1 + (long)rnd.nextInt(10));
             orderService.update(order);
-            orderProductService.update(orderProduct);
+            orderProductService.save(orderProduct);
             productService.update(product);
         }
         createThisDayOrder(randomProduct());
@@ -73,7 +73,7 @@ public class CommonUtil {
         Product product = new Product();
         String name = RandomStringUtils.randomAlphabetic(6);
         String description = RandomStringUtils.randomAlphabetic(10);
-        Long cost = rnd.nextLong();
+        Long cost = 1 + (long) rnd.nextInt(1000000);
         product.setName(name);
         product.setDescription(description);
         product.setCost(cost);

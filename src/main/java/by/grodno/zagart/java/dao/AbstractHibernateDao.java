@@ -12,6 +12,9 @@ import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
 
 /**
  * Abstract class represents DAO layer.
+ *
+ * @param <T>
+ * @param <PK>
  */
 public abstract class AbstractHibernateDao
                      <T extends IdentifiableEntity,
@@ -29,7 +32,6 @@ public abstract class AbstractHibernateDao
 
     @Override
     public void update(T obj) {
-        getCurrentSession().persist(obj);
         getCurrentSession().update(obj);
     }
 
@@ -46,7 +48,12 @@ public abstract class AbstractHibernateDao
 
     @Override
     public List<T> getListByQuery(String hql) {
-        return (List<T>) getCurrentSession().createQuery(hql).getResultList();
+        return (List<T>) getCurrentSession().createQuery(hql).list();
+    }
+
+    @Override
+    public void executeQuery(String hql) {
+        getCurrentSession().createQuery(hql).executeUpdate();
     }
 
     @Override

@@ -42,7 +42,7 @@ public class Product implements IdentifiableEntity<Long> {
     public Long getCost() { return cost; }
     public void setCost(Long cost) { this.cost = cost; }
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     public List<OrderProduct> getOrderProduct() { return orderProduct; }
     public void setOrderProduct(List<OrderProduct> orderProduct) { this.orderProduct = orderProduct; }
 
