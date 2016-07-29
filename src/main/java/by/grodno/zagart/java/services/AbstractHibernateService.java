@@ -10,6 +10,8 @@ import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static by.grodno.zagart.java.util.HibernateUtil.*;
 
@@ -93,19 +95,32 @@ public abstract class AbstractHibernateService
         openCurrentSession();
         List<T> daoListByQuery = dao.getListByQuery(hql);
         closeCurrentSession();
-        logger.info(String.format("%s objects pulled from database by query(%d).",
+        logger.info(String.format("%s object(s) pulled from database by query(%d).",
                 entityObj.getEntityName(),
                 daoListByQuery.size()));
         return daoListByQuery;
     }
 
     @Override
-    public void executeQuery(String hql) {
+    public Set<PK> getPkSetByQuery(String hql) {
+        openCurrentSession();
+        Set<PK> daoPkSetByQuery = dao.getPkSetByQuery(hql);
+        closeCurrentSession();
+        logger.info(String.format("%s id(s) pulled from database by query(%d).",
+                entityObj.getEntityName(),
+                daoPkSetByQuery.size()));
+        return daoPkSetByQuery;
+    }
+
+    @Override
+    public int executeQuery(String hql, Map<String, Object> parameters) {
         openCurrentSessionWithTransaction();
-        dao.executeQuery(hql);
+        int affected = dao.executeQuery(hql, parameters);
         closeCurrentSessionWithTransaction();
-        logger.info(String.format("%s query executed.",
-                entityObj.getEntityName()));
+        logger.info(String.format("%s query executed. %d element(s) affected.",
+                entityObj.getEntityName(),
+                affected));
+        return affected;
     }
 
     @Override

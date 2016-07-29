@@ -1,9 +1,12 @@
 package by.grodno.zagart.java.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.query.Query;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Interface that defines methods which necassary
@@ -24,7 +27,9 @@ public interface GenericDao<T, PK extends Serializable> {
 
     List<T> getListByQuery(String hql);
 
-    void executeQuery(String hql);
+    Set<PK> getPkSetByQuery(String hql);
+
+    int executeQuery(String hql, Map<String, Object> parameters);
 
     T getById(final PK id);
 

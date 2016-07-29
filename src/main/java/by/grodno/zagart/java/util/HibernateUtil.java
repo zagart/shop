@@ -58,11 +58,6 @@ public class HibernateUtil {
     }
 
     public static void closeCurrentSession() {
-        if (++batch % BATCH_SIZE == 0) {
-            currentSession.flush();
-            currentSession.clear();
-            batch = 1;
-        }
         currentSession.close();
     }
 

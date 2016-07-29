@@ -6,12 +6,9 @@ import by.grodno.zagart.java.entities.Product;
 import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 import by.grodno.zagart.java.services.impl.ProductServiceImpl;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Zagart on 14.07.2016.
@@ -79,8 +76,10 @@ public class MainUtil {
                         "and o.dateOfOrder = current_date " +
                         "and op.product != %d",
                         product.getId()));
-        if (!listByQuery.isEmpty()) {
-            for (Order o : listByQuery) {
+        Set<Order> setFromList = new HashSet<>();
+        setFromList.addAll(listByQuery);
+        if (!setFromList.isEmpty()) {
+            for (Order o : setFromList) {
                 System.out.println(String.format("#4 %s", o.getNumber()));
             }
         } else {
@@ -104,14 +103,26 @@ public class MainUtil {
         if (!listByQuery.isEmpty()) {
             for (Product p : listByQuery) {
                 orderProduct.addOrderProduct(order, p, 1L);
-                productService.update(p);
+                orderProductService.save(orderProduct);
             }
-            orderProductService.save(orderProduct);
-            orderService.update(order);
             System.out.println("#5 new order created.");
         } else {
             System.out.println("#5 no records found.");
         }
+    }
+
+    public static void deleteOrdersByProductQuantity(Long quantity) {
+        Map<String, Object> parameters = new HashMap<>();
+        String hql = String.format("select o.id from Order o " +
+                "join o.orderProduct as op " +
+                "where o = op.order " +
+                "and op.quantity = %d", quantity);
+        Set<Long> idSet = orderService.getPkSetByQuery(hql);
+        parameters.put("idSet", idSet);
+        hql = "delete from OrderProduct where order.id in :idSet";
+        orderProductService.executeQuery(hql, parameters);
+        hql = "delete from Order where id in :idSet";
+        orderProductService.executeQuery(hql, parameters);
     }
 
 }

@@ -36,13 +36,13 @@ public class CommonUtil {
             orderProduct.addOrderProduct(order, product, 1 + (long)rnd.nextInt(100));
             orderService.save(order);
             orderProductService.save(orderProduct);
-            productService.update(product);
+//            productService.update(product);
             product = randomProduct();
             productService.save(product);
             orderProduct.addOrderProduct(order, product, 1 + (long)rnd.nextInt(10));
-            orderService.update(order);
+//            orderService.update(order);
             orderProductService.save(orderProduct);
-            productService.update(product);
+//            productService.update(product);
         }
         createThisDayOrder(randomProduct());
     }
@@ -88,11 +88,11 @@ public class CommonUtil {
     }
 
     public static Date randomDate() {
-        Random rnd = new Random();
-        Date date = DateUtils.setYears(new Date(), 2000 + rnd.nextInt(17));
-        date = DateUtils.setMonths(date, 1 + rnd.nextInt(11));
-        date = DateUtils.setDays(date, 1 + rnd.nextInt(28));
-        return date;
+//        Random rnd = new Random();
+//        Date date = DateUtils.setYears(new Date(), 2000 + rnd.nextInt(16));
+//        date = DateUtils.setMonths(date, rnd.nextInt(11));
+//        date = DateUtils.setDays(date, rnd.nextInt(28));
+        return new Date();
     }
 
 }

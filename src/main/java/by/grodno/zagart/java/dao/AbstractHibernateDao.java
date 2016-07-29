@@ -4,9 +4,10 @@ import by.grodno.zagart.java.interfaces.IdentifiableEntity;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
 import org.hibernate.Criteria;
+import org.hibernate.query.Query;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
 
@@ -52,8 +53,17 @@ public abstract class AbstractHibernateDao
     }
 
     @Override
-    public void executeQuery(String hql) {
-        getCurrentSession().createQuery(hql).executeUpdate();
+    public Set<PK> getPkSetByQuery(String hql) {
+        return new HashSet<>(getCurrentSession().createQuery(hql).list());
+    }
+
+    @Override
+    public int executeQuery(String hql, Map<String, Object> parameters) {
+        Query query = getCurrentSession().createQuery(hql);
+        for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+            query.setParameter(parameter.getKey(), parameter.getValue());
+        }
+        return query.executeUpdate();
     }
 
     @Override

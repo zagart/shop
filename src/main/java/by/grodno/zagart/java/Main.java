@@ -24,6 +24,7 @@ public class Main {
         getOrderByProduct(productService.getById(7L));
         getOrderOfTheDayNotContainProduct(productService.getById(5L));
         createNewOrderOfTheDay();
+        deleteOrdersByProductQuantity(orderProductService.getById(19L).getQuantity());
         closeFactory();
     }
 
