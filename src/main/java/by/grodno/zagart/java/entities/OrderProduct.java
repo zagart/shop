@@ -12,33 +12,31 @@ import java.util.List;
  * and order.
  */
 @Entity
-@Table(name = "order_product")
+@Table(name = "SHOP_ORDER_PRODUCT")
 public class OrderProduct implements Identifiable<Long> {
-
-    private static String entityName = "OrderProduct";
 
     private Long id;
     private Order order;
     private Product product;
     private Long quantity;
 
-    @Transient
-    public String getEntityName() { return entityName; }
-    public static void setEntityName(String entityName) { OrderProduct.entityName = entityName; }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ORDER_ID")
     public Order getOrder() { return order; }
     public void setOrder(Order order) { this.order = order; }
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }
 
+    @Column(name = "QUANTITY")
     public Long getQuantity() { return quantity; }
     public void setQuantity(Long quantity) { this.quantity = quantity; }
 

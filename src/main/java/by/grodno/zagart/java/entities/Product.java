@@ -12,10 +12,8 @@ import java.util.List;
  * Entity that represents a product.
  */
 @Entity
-@Table(name = "shop_product")
+@Table(name = "SHOP_PRODUCT")
 public class Product implements Identifiable<Long> {
-
-    private static String entityName = "Product";
 
     private Long id;
     private String name;
@@ -23,22 +21,21 @@ public class Product implements Identifiable<Long> {
     private Long cost;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
 
-    @Transient
-    public String getEntityName() { return entityName; }
-    public static void setEntityName(String entityName) { Product.entityName = entityName; }
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    @Column(name = "NAME")
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    @Column(name = "DESCRIPTION")
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    @Column(name = "COST")
     public Long getCost() { return cost; }
     public void setCost(Long cost) { this.cost = cost; }
 

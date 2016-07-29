@@ -1,8 +1,5 @@
 package by.grodno.zagart.java.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.query.Query;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

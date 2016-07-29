@@ -1,7 +1,5 @@
 package by.grodno.zagart.java.services;
 
-import org.hibernate.criterion.Criterion;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +19,6 @@ public interface GenericService<T, PK extends Serializable> {
     void update(final T obj);
 
     List<T> getAll();
-
-    List<T> getByCriterion(Criterion criterion);
-
-    List<T> getByCriterion(List<Criterion> criterions);
 
     List<T> getListByQuery(String hql);
 

@@ -3,11 +3,13 @@ package by.grodno.zagart.java.dao;
 import by.grodno.zagart.java.interfaces.Identifiable;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
-import org.hibernate.Criteria;
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
 

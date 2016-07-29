@@ -13,30 +13,26 @@ import java.util.List;
  * Entity that represents a product.
  */
 @Entity
-@Table(name = "shop_order")
+@Table(name = "SHOP_ORDER")
 public class Order implements Identifiable<Long> {
-
-    private static String entityName = "Order";
 
     private Long id;
     private String number;
     private Date dateOfOrder;
     private List<OrderProduct> orderProduct = new ArrayList<OrderProduct>();
 
-    @Transient
-    public String getEntityName() { return entityName; }
-    public static void setEntityName(String entityName) { Order.entityName = entityName; }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    @Column(name = "NUMBER")
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date_of_order")
+    @Column(name = "DATE_OF_ORDER")
     public Date getDateOfOrder() { return dateOfOrder; }
     public void setDateOfOrder(Date dateOfOrder) { this.dateOfOrder = dateOfOrder; }
 

@@ -1,12 +1,9 @@
 package by.grodno.zagart.java.services;
 
 import by.grodno.zagart.java.dao.GenericDao;
-import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.interfaces.Identifiable;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
 import java.util.List;

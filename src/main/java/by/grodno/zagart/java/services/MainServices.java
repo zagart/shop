@@ -1,4 +1,4 @@
-package by.grodno.zagart.java.util;
+package by.grodno.zagart.java.services;
 
 import by.grodno.zagart.java.entities.Order;
 import by.grodno.zagart.java.entities.OrderProduct;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by Zagart on 14.07.2016.
  */
-public class MainUtil {
+public class MainServices {
 
     private static OrderServiceImpl orderService = new OrderServiceImpl();
     private static OrderProductServiceImpl orderProductService = new OrderProductServiceImpl();
