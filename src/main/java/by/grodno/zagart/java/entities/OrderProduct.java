@@ -1,6 +1,6 @@
 package by.grodno.zagart.java.entities;
 
-import by.grodno.zagart.java.interfaces.IdentifiableEntity;
+import by.grodno.zagart.java.interfaces.Identifiable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "order_product")
-public class OrderProduct implements IdentifiableEntity<Long> {
+public class OrderProduct implements Identifiable<Long> {
 
     private static String entityName = "OrderProduct";
 
@@ -31,11 +31,11 @@ public class OrderProduct implements IdentifiableEntity<Long> {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     public Order getOrder() { return order; }
     public void setOrder(Order order) { this.order = order; }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }
 

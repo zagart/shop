@@ -1,8 +1,11 @@
 package by.grodno.zagart.java;
 
+import by.grodno.zagart.java.entities.Product;
 import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 import by.grodno.zagart.java.services.impl.ProductServiceImpl;
+
+import java.util.ArrayList;
 
 import static by.grodno.zagart.java.util.CommonUtil.createOrders;
 import static by.grodno.zagart.java.util.HibernateUtil.closeFactory;

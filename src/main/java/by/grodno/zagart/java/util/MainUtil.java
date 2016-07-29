@@ -6,7 +6,6 @@ import by.grodno.zagart.java.entities.Product;
 import by.grodno.zagart.java.services.impl.OrderProductServiceImpl;
 import by.grodno.zagart.java.services.impl.OrderServiceImpl;
 import by.grodno.zagart.java.services.impl.ProductServiceImpl;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.*;
 
@@ -29,9 +28,9 @@ public class MainUtil {
                 orderServiceById.getId(),
                 orderServiceById.getNumber(),
                 orderServiceById.getDateOfOrder()));
-        List<OrderProduct> listByCriterion = orderProductService.getByCriterion(Restrictions.eq("order", order));
-        if (!listByCriterion.isEmpty()) {
-            for (OrderProduct op : listByCriterion) {
+        List<OrderProduct> products = orderServiceById.getOrderProduct();
+        if (!products.isEmpty()) {
+            for (OrderProduct op : products) {
                 System.out.println(String
                         .format("#1 product name: %s, product cost: %d, quantity in order: %d",
                                 op.getProduct().getName(),
@@ -39,7 +38,7 @@ public class MainUtil {
                                 op.getQuantity()));
             }
         } else {
-            System.out.println("#1 no records found.");
+            System.out.println("#1 no record(s) found.");
         }
     }
 
@@ -51,7 +50,7 @@ public class MainUtil {
                 System.out.println(String.format("#2 order %s", o.getNumber()));
             }
         } else {
-            System.out.println("#2 no records found.");
+            System.out.println("#2 no record(s) found.");
         }
     }
 
@@ -64,7 +63,7 @@ public class MainUtil {
                 System.out.println(op.getOrder().getNumber());
             }
         } else {
-            System.out.println("#3 no records found.");
+            System.out.println("#3 no record(s) found.");
         }
     }
 
@@ -83,7 +82,7 @@ public class MainUtil {
                 System.out.println(String.format("#4 %s", o.getNumber()));
             }
         } else {
-            System.out.println("#4 no records found.");
+            System.out.println("#4 no record(s) found.");
         }
     }
 
@@ -107,7 +106,7 @@ public class MainUtil {
             }
             System.out.println("#5 new order created.");
         } else {
-            System.out.println("#5 no records found.");
+            System.out.println("#5 no record(s) found.");
         }
     }
 
@@ -118,11 +117,18 @@ public class MainUtil {
                 "where o = op.order " +
                 "and op.quantity = %d", quantity);
         Set<Long> idSet = orderService.getPkSetByQuery(hql);
-        parameters.put("idSet", idSet);
-        hql = "delete from OrderProduct where order.id in :idSet";
-        orderProductService.executeQuery(hql, parameters);
-        hql = "delete from Order where id in :idSet";
-        orderProductService.executeQuery(hql, parameters);
+        if (!idSet.isEmpty()) {
+            parameters.put("idSet", idSet);
+            hql = "delete from OrderProduct where order.id in :idSet";
+            orderProductService.executeQuery(hql, parameters);
+            hql = "delete from Order where id in :idSet";
+            orderProductService.executeQuery(hql, parameters);
+            System.out.println(String
+                    .format("#6 orders with %d product(s) deleted.",
+                            quantity));
+        } else {
+            System.out.println("#6 no record(s) found.");
+        }
     }
 
 }

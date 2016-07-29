@@ -1,6 +1,6 @@
 package by.grodno.zagart.java.entities;
 
-import by.grodno.zagart.java.interfaces.IdentifiableEntity;
+import by.grodno.zagart.java.interfaces.Identifiable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "shop_product")
-public class Product implements IdentifiableEntity<Long> {
+public class Product implements Identifiable<Long> {
 
     private static String entityName = "Product";
 

@@ -1,6 +1,6 @@
 package by.grodno.zagart.java.dao;
 
-import by.grodno.zagart.java.interfaces.IdentifiableEntity;
+import by.grodno.zagart.java.interfaces.Identifiable;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
 import org.hibernate.Criteria;
@@ -18,7 +18,7 @@ import static by.grodno.zagart.java.util.HibernateUtil.getCurrentSession;
  * @param <PK>
  */
 public abstract class AbstractHibernateDao
-                     <T extends IdentifiableEntity,
+                     <T extends Identifiable,
                      PK extends Serializable>
                      implements GenericDao<T, PK>, Loggable, Reflective {
 
@@ -38,13 +38,9 @@ public abstract class AbstractHibernateDao
 
     @Override
     public List<T> getAll() {
-        Criteria allRecords = getCurrentSession().createCriteria(entityObj.getClass());
-        return allRecords.list();
-    }
-
-    @Override
-    public List<T> getByCriteria(Criteria criteria) {
-        return criteria.list();
+        String hql = String.format("select target from %s target", entityObj.getClass().getName());
+        Query query = getCurrentSession().createQuery(hql);
+        return query.list();
     }
 
     @Override
@@ -60,15 +56,16 @@ public abstract class AbstractHibernateDao
     @Override
     public int executeQuery(String hql, Map<String, Object> parameters) {
         Query query = getCurrentSession().createQuery(hql);
-        for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-            query.setParameter(parameter.getKey(), parameter.getValue());
-        }
+        query.setProperties(parameters);
         return query.executeUpdate();
     }
 
     @Override
     public T getById(PK id) {
-        return (T) getCurrentSession().get(entityObj.getClass(), id);
+        String hql = String.format("select target from %s target where id = :targetId", entityObj.getClass().getName());
+        Query query = getCurrentSession().createQuery(hql);
+        query.setParameter("targetId", id);
+        return (T) query.uniqueResult();
     }
 
     @Override

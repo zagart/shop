@@ -7,10 +7,8 @@ import java.io.Serializable;
  * identifier and to have text definition of entity. Mainly
  * used for convenience to make logging more informative.
  */
-public interface IdentifiableEntity<PK extends Serializable> {
+public interface Identifiable<PK extends Serializable> {
 
     PK getId();
-
-    String getEntityName();
 
 }

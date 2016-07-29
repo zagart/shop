@@ -23,8 +23,6 @@ public interface GenericDao<T, PK extends Serializable> {
 
     List<T> getAll();
 
-    List<T> getByCriteria(Criteria criteria);
-
     List<T> getListByQuery(String hql);
 
     Set<PK> getPkSetByQuery(String hql);

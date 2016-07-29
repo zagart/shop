@@ -2,7 +2,7 @@ package by.grodno.zagart.java.services;
 
 import by.grodno.zagart.java.dao.GenericDao;
 import by.grodno.zagart.java.entities.Order;
-import by.grodno.zagart.java.interfaces.IdentifiableEntity;
+import by.grodno.zagart.java.interfaces.Identifiable;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
 import org.hibernate.Criteria;
@@ -23,7 +23,7 @@ import static by.grodno.zagart.java.util.HibernateUtil.*;
  * @param <DAO>
  */
 public abstract class AbstractHibernateService
-                    <T extends IdentifiableEntity,
+                    <T extends Identifiable,
                     PK extends Serializable,
                     DAO extends GenericDao>
                     implements GenericService<T, PK>, Loggable, Reflective {
@@ -39,7 +39,7 @@ public abstract class AbstractHibernateService
         dao.save(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object saved with id = %d.",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 obj.getId()));
         return (PK) obj.getId();
     }
@@ -50,7 +50,7 @@ public abstract class AbstractHibernateService
         dao.update(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object with id = %d updated.",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 obj.getId()));
     }
 
@@ -60,34 +60,9 @@ public abstract class AbstractHibernateService
         List<T> daoAll = dao.getAll();
         closeCurrentSession();
         logger.info(String.format("All %s objects pulled from database(%d).",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 daoAll.size()));
         return daoAll;
-    }
-
-    @Override
-    public List<T> getByCriterion(Criterion criterion) {
-        openCurrentSession();
-        Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass()).add(criterion);
-        List<Order> daoByCriteria = dao.getByCriteria(criteria);
-        closeCurrentSession();
-        logger.info(String.format("%s objects pulled from database by criterion(%d).",
-                entityObj.getEntityName(),
-                daoByCriteria.size()));
-        return (List<T>) daoByCriteria;
-    }
-
-    @Override
-    public List<T> getByCriterion(List<Criterion> criterions) {
-        openCurrentSession();
-        Criteria criteria = getCurrentSession().createCriteria(entityObj.getClass());
-        criterions.forEach(criteria::add);
-        List<Order> daoByCriteria = dao.getByCriteria(criteria);
-        closeCurrentSession();
-        logger.info(String.format("%s objects pulled from database by criterions(%d).",
-                entityObj.getEntityName(),
-                daoByCriteria.size()));
-        return (List<T>) daoByCriteria;
     }
 
     @Override
@@ -96,7 +71,7 @@ public abstract class AbstractHibernateService
         List<T> daoListByQuery = dao.getListByQuery(hql);
         closeCurrentSession();
         logger.info(String.format("%s object(s) pulled from database by query(%d).",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 daoListByQuery.size()));
         return daoListByQuery;
     }
@@ -107,7 +82,7 @@ public abstract class AbstractHibernateService
         Set<PK> daoPkSetByQuery = dao.getPkSetByQuery(hql);
         closeCurrentSession();
         logger.info(String.format("%s id(s) pulled from database by query(%d).",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 daoPkSetByQuery.size()));
         return daoPkSetByQuery;
     }
@@ -118,7 +93,7 @@ public abstract class AbstractHibernateService
         int affected = dao.executeQuery(hql, parameters);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s query executed. %d element(s) affected.",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 affected));
         return affected;
     }
@@ -129,7 +104,7 @@ public abstract class AbstractHibernateService
         T obj = (T) dao.getById(id);
         closeCurrentSession();
         logger.info(String.format("%s object pulled from database by id = %d.",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 obj.getId()));
         return obj;
     }
@@ -139,7 +114,8 @@ public abstract class AbstractHibernateService
         openCurrentSessionWithTransaction();
         dao.delete(id);
         closeCurrentSessionWithTransaction();
-        logger.info(String.format("%s object deleted from database by id = %d.", entityObj.getEntityName(), id));
+        logger.info(String.format("%s object deleted from database by id = %d.",
+                entityObj.getClass().getSimpleName(), id));
     }
 
     @Override
@@ -148,7 +124,7 @@ public abstract class AbstractHibernateService
         dao.delete(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object with id = %d deleted from database.",
-                entityObj.getEntityName(),
+                entityObj.getClass().getSimpleName(),
                 obj.getId()));
     }
 
