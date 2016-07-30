@@ -17,7 +17,7 @@ public class Main {
     private static OrderProductServiceImpl orderProductService = new OrderProductServiceImpl();
     private static ProductServiceImpl productService = new ProductServiceImpl();
 
-    public static void main(String[] args ) {
+    public static void main(String[] args) {
         createOrders(10);
         getOrderInfo(orderService.getById(1L));
         getOrderNumberByQuantityBySum(4L,2L);

@@ -4,6 +4,7 @@ import by.grodno.zagart.java.dao.GenericDao;
 import by.grodno.zagart.java.interfaces.Identifiable;
 import by.grodno.zagart.java.interfaces.Loggable;
 import by.grodno.zagart.java.interfaces.Reflective;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +26,7 @@ public abstract class AbstractHibernateService
                     DAO extends GenericDao>
                     implements GenericService<T, PK>, Loggable, Reflective {
 
+    @Autowired
     private GenericDao dao = (GenericDao) getGenericObject(2);
     private final T entityObj;
 
